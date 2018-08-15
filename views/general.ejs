@@ -1,0 +1,166 @@
+<% include partials/header %>
+
+<% function convertHours(unixTime) {  %>
+  <% var date = new Date((unixTime + (data.offset * 3600)) * 1000); %>
+  <% var hours = date.getUTCHours() %>
+  <% var minutes = "0" + date.getUTCMinutes(); %>
+  <% var formattedTime = hours + ':' + minutes.substr(-2); %>
+  <% return formattedTime; %>
+<% }; %>
+
+<% function convertDate(unixTime) {  %>
+  <% var date = new Date((unixTime + (data.offset * 3600)) * 1000).toUTCString(); %>
+  <% var date = date.replace("GMT", ""); %>
+  <% return date.replace(date.slice(-9),""); %>
+<% }; %>
+
+<!-- CURRENT WEATHER -->
+
+<div class="row currWx-wrapper">
+  <div class="col-xl-9 col-l-9 col-m-12">
+    <div class="row">
+      <div class="col-xl-12 col-l-12 col-m-12 location"><%= city.name %>, <%= city.country %> <%= convertDate(data.currently.time) %></div>
+    </div>
+    <div class="row">
+      <div class="col-xl-4 col-l-4 col-m-4">
+        <i class="wi wi-day-sunny currWx-icon"></i>
+      </div>
+      <div class="col-xl-4 col-l-4 col-m-4">
+        <ul class="currWx-list">
+          <li class="currWx-listItem">TEMP <span class="currWx-data"><%= Math.round(data.currently.temperature) %><i class="wi wi-celsius"></i></span></li>
+          <li class="currWx-listItem">FEELS LIKE <span class="currWx-data"><%= Math.round(data.currently.apparentTemperature) %><i class="wi wi-celsius"></i></span></li>
+          <li class="currWx-listItem">WINDS <span class="currWx-data"><%= Math.round(data.currently.windSpeed) %>mph <i class="wi wi-wind from-<%= data.currently.windBearing %>-deg"></i></span></li>
+          <li class="currWx-listItem">SUMMARY <span class="currWx-data currWx-summary"><%= data.currently.summary %></span></li>
+          <li class="currWx-listItem">HUMIDITY <span class="currWx-data"><%= Math.round(data.currently.humidity * 100) %>%</span></li>
+          <li class="currWx-listItem">PRESSURE <span class="currWx-data"><%= Math.round(data.currently.pressure) %>mbar</span></li>
+          <li class="currWx-listItem">CLOUD <span class="currWx-data"><%= Math.round(data.currently.cloudCover * 100) %>%</span></li>
+          <li class="currWx-listItem">VISILITY <span class="currWx-data">N/A</span></li>
+        </ul>
+      </div>
+      <div class="col-xl-4 col-l-4 col-m-4">
+        <ul class="currWx-list">
+          <li class="currWx-listItem">SUNRISE <span class="currWx-data"><%= convertHours(data.daily.data[0].sunriseTime) %></span></li>
+          <li class="currWx-listItem">SUNSET <span class="currWx-data"><%= convertHours(data.daily.data[0].sunsetTime) %></span></li>
+          <li class="currWx-listItem">MOONRISE <span class="currWx-data"><%= data.daily.data[0].moonriseTime %></span></li>
+          <li class="currWx-listItem">MOONSET <span class="currWx-data"><%= data.daily.data[0].moonsetTime %></span></li>
+          <li class="currWx-listItem">ILLUMINATION <span class="currWx-data"></span></li>
+          <li class="currWx-listItem">LUNAR PHASE <span class="currWx-data"><%= Math.round(data.daily.data[0].moonPhase * 100) %>%</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="mapCont" class="col-xl-3 col-l-3 col-m-12">
+    <div id="map" class="map">
+    </div>
+  </div>
+</div>
+
+<!-- 7 DAY WEATHER -->
+<div class="row sevenDayWx-wrap01">
+  <div class="col-xl-6 col-l-6 day">MONDAY
+    <div class="row">
+      <div class="col-xl-12 col-l-12">GRAPHIC</div>
+    </div>
+  </div>
+  <div class="col-xl-6 col-l-6 day">TUESDAY
+    <div class="row">
+      <div class="col-xl-12 col-l-12">GRAPHIC</div>
+    </div>
+  </div>
+</div>
+
+<!-- DROPDOWN -->
+<div class="row dropDownHourly">
+  <div class="col-xl-12">
+    GETTING WEATHER...
+  </div>
+</div>
+
+<!-- ROW 3 -->
+<div class="row sevenDayWx-wrap02">
+  <div class="col-xl-w1 col-l-w1 day">WEDNESDAY
+    <div class="row">
+      <div class="col-xl-12 col-l-12"><i class="wi wi-day-sunny sevenDayWx-icon"></i></div>
+    </div>
+    <div class="row">
+      <div class="col-xl-12 col-l-12">
+        <ul class="sevenDayWx-list">
+          <li class="sevenDayWx-listItem"><i class="wi wi-celsius"></i>27</li>
+          <li class="sevenDayWx-listItem"><i class="wi wi-wind towards-23-deg"></i>SW5</li>
+          <li class="sevenDayWx-listItem"><i class="wi wi-humidity"></i> 12%</li>
+          <li class="sevenDayWx-listItem"><i class="wi wi-barometer"></i>29.92</li>
+          <li class="sevenDayWx-listItem"><i class="wi wi-cloud"></i>Cloudy</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-w1 col-l-w1 day">THURSDAY
+    <div class="row">
+      <div class="col-xl-12 col-l-12"><i class="wi wi-hail sevenDayWx-icon"></i></div>
+    </div>
+    <div class="row">
+      <div class="col-xl-12 col-l-12">
+        <ul class="sevenDayWx-list">
+          <li class="sevenDayWx-listItem"><i class="wi wi-celsius"></i>27</li>
+          <li class="sevenDayWx-listItem"><i class="wi wi-wind towards-23-deg"></i>SW5</li>
+          <li class="sevenDayWx-listItem"><i class="wi wi-humidity"></i> 12%</li>
+          <li class="sevenDayWx-listItem"><i class="wi wi-barometer"></i>29.92</li>
+          <li class="sevenDayWx-listItem"><i class="wi wi-cloud"></i>Cloudy</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-w1 col-l-w1 day">FRIDAY
+    <div class="row">
+      <div class="col-xl-12 col-l-12"><i class="wi wi-day-sunny sevenDayWx-icon"></i></div>
+    </div>
+    <div class="row">
+      <div class="col-xl-12 col-l-12">
+        <ul class="sevenDayWx-list">
+          <li class="sevenDayWx-listItem"><i class="wi wi-celsius"></i>27</li>
+          <li class="sevenDayWx-listItem"><i class="wi wi-wind towards-23-deg"></i>SW5</li>
+          <li class="sevenDayWx-listItem"><i class="wi wi-humidity"></i> 12%</li>
+          <li class="sevenDayWx-listItem"><i class="wi wi-barometer"></i>29.92</li>
+          <li class="sevenDayWx-listItem"><i class="wi wi-cloud"></i>Cloudy</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-w1 col-l-w1 day">SATURDAY
+    <div class="row">
+      <div class="col-xl-12 col-l-12"><i class="wi wi-day-cloudy sevenDayWx-icon"></i></div>
+    </div>
+    <div class="row">
+      <div class="col-xl-12 col-l-12">
+        <ul class="sevenDayWx-list">
+          <li class="sevenDayWx-listItem"><i class="wi wi-celsius"></i>27</li>
+          <li class="sevenDayWx-listItem"><i class="wi wi-wind towards-23-deg"></i>SW5</li>
+          <li class="sevenDayWx-listItem"><i class="wi wi-humidity"></i> 12%</li>
+          <li class="sevenDayWx-listItem"><i class="wi wi-barometer"></i>29.92</li>
+          <li class="sevenDayWx-listItem"><i class="wi wi-cloud"></i>Cloudy</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-w1 col-l-w1 day">SUNDAY
+    <div class="row">
+      <div class="col-xl-12 col-l-12"><i class="wi wi-snow sevenDayWx-icon"></i></div>
+    </div>
+    <div class="row">
+      <div class="col-xl-12 col-l-12">
+        <ul class="sevenDayWx-list">
+          <li class="sevenDayWx-listItem"><i class="wi wi-celsius"></i>27</li>
+          <li class="sevenDayWx-listItem"><i class="wi wi-wind towards-23-deg"></i>SW5</li>
+          <li class="sevenDayWx-listItem"><i class="wi wi-humidity"></i> 12%</li>
+          <li class="sevenDayWx-listItem"><i class="wi wi-barometer"></i>29.92</li>
+          <li class="sevenDayWx-listItem"><i class="wi wi-cloud"></i>Cloudy</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="/js/general.js"></script>
+<script type="text/javascript" src="/js/map.js"></script>
+
+<% include partials/footer %>
