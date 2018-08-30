@@ -10,10 +10,12 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "body-parser": "^1.18.2",
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "express-async-handler": "^1.1.4",
+    "helmet": "^3.13.0",
     "pg": "^7.4.3",
     "request": "^2.88.0",
     "request-promise": "^4.2.2",

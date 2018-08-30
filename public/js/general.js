@@ -1,5 +1,4 @@
-/* jshint esversion: 6 */
-
+(function() {
 let day = document.querySelectorAll(".day");
 let dropDownHourly = document.querySelector(".dropDownHourly");
 let clickedIndex = 0;
@@ -21,10 +20,6 @@ day.forEach (function(el, i) {
     clickedIndex = i;
   });
 });
-
-// search.addEventListener("keyup", () => {
-//
-// });
 
 searchInput.addEventListener("input", async (event) => {
   let input = event.target.value;
@@ -69,3 +64,4 @@ searchInput.addEventListener("input", async (event) => {
   }
   searchList.replaceChild(list, searchList.childNodes[0]);
 });
+})();

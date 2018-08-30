@@ -1,7 +1,9 @@
 const express     = require("express"),
       app         = express(),
-      mountRoutes = require("./routes");
+      mountRoutes = require("./lib/routes"),
+      helmet = require("helmet");
 
+app.use(helmet());
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 
